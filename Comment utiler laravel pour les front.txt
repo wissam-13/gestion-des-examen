@@ -12,5 +12,6 @@ comment utilizer le serveur:
 			DB_PASSWORD=
 	- apres dans le projet ouvrir le terminal et taper les commandes suivant:
 		- php artisan migrate (si il ca marche pas ouvrir le fichier app/Providers/AppServiceProvider.php et ajoute la ligne : Schema::defaultStringLength(191); dans boot() methode) 
+		- composer install
 		- php artisan serve ( la plupart des fois il returne : Server running on [http://127.0.0.1:8000]) 
 			 c-a-d: le serveur est demarer sur : http://127.0.0.1:8000
