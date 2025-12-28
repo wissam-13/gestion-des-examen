@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\AdminAuthController;
+use App\Http\Controllers\Admin\EnrollementController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PlanerController;
 use App\Http\Controllers\Admin\TeacherController;
@@ -42,13 +43,22 @@ Route::prefix('admin')->group(function(){
             Route::delete('/{planer}','destroy');
             Route::put('/{planer}/active','active');
         });
-        // Mange Groups
+        // Manage Groups
         Route::controller(GroupController::class)->prefix('group')->group(function(){
             Route::get('/','index');
             Route::post('/','store');
             Route::get('/{group}/show','show');
             Route::put('/{group}','update');
             Route::delete('/{group}','destroy');
+        });
+        // Manage Enrollements
+        Route::controller(EnrollementController::class)->prefix('enrollement')->group(function(){
+            Route::get('/','index');
+            Route::get('/group/{group}','index_by_group');
+            Route::post('/','store');
+            Route::get('/{student}/{group}/show','show');
+            Route::put('/{student}/{group}','update');
+            Route::delete('/{student}/{group}','destroy');
         });
     });
 });
