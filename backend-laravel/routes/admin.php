@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Auth\AdminAuthController;
 use App\Http\Controllers\Admin\EnrollementController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PlanerController;
+use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Http\Request;
@@ -59,6 +60,14 @@ Route::prefix('admin')->group(function(){
             Route::get('/{student}/{group}/show','show');
             Route::put('/{student}/{group}','update');
             Route::delete('/{student}/{group}','destroy');
+        });
+        // Manage Rooms
+        Route::controller(RoomController::class)->prefix('room')->group(function(){
+            Route::get('/','index');
+            Route::post('/','store');
+            Route::get('/{room}/show','show');
+            Route::put('/{room}','update');
+            Route::delete('/{room}','destroy');
         });
     });
 });

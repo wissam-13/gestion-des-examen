@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(false);
             $table->rememberToken();
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

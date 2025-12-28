@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->primary(['user_id','group_id']);
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

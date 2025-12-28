@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('max_supervisions');
             $table->rememberToken();
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 
