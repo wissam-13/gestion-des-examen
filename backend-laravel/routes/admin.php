@@ -11,6 +11,7 @@ Route::prefix('admin')->group(function(){
     Route::post('/login', [AdminAuthController::class, 'login']);
     // Route::post('/signup', [AdminAuthController::class, 'signup']);
 
+    //  When the admin Auth
     Route::middleware('auth:admin')->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout']);
         // Manage students
