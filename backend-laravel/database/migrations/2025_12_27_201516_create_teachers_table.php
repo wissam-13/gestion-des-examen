@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('speciality');
             $table->string('phone');
             $table->integer('max_supervisions');
+            $table->boolean('is_active')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
