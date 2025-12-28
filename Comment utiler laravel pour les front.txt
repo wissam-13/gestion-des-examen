@@ -1,0 +1,16 @@
+comment utilizer le serveur:
+	- demarer votre WampServer ou xamp
+	- creer votre base de donnee dans localhost
+	- creer votre fichier .env ( comme le ficher .env.example )
+	- dans .env fichier entre le nom de votre bdd a cree
+		exemple :
+			DB_CONNECTION=mysql
+			DB_HOST=127.0.0.1
+			DB_PORT=3306
+			DB_DATABASE=exemple_laravel
+			DB_USERNAME=root
+			DB_PASSWORD=
+	- apres dans le projet ouvrir le terminal et taper les commandes suivant:
+		- php artisan migrate (si il ca marche pas ouvrir le fichier app/Providers/AppServiceProvider.php et ajoute la ligne : Schema::defaultStringLength(191); dans boot() methode) 
+		- php artisan serve ( la plupart des fois il returne : Server running on [http://127.0.0.1:8000]) 
+			 c-a-d: le serveur est demarer sur : http://127.0.0.1:8000

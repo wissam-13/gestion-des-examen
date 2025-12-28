@@ -1,0 +1,36 @@
+si le serveur est demarer sur : http://127.0.0.1:8000 vous devez toujour l'utiliser
+exemple : http://127.0.0.1:8000/api/etudiant ===> retourne tout les etudiants dans la base
+
+// Authentifications
+	// admin : 
+		 POST --  http://127.0.0.1:8000/api/admin/login  => connecter l'admin
+		 POST -=   http://127.0.0.1:8000/api/admin/logout => deconnecter l'admin
+	// Planer : 
+		POST  --  http://127.0.0.1:8000/api/planer/login => connecter le planer
+		POST  --  http://127.0.0.1:8000/api/planer/signup => registrer d un planer
+		POST  --   http://127.0.0.1:8000/api/planer/logout => deconnecter le planer
+	// Teacher : 
+		POST  --  http://127.0.0.1:8000/api/teacher/login => connecter le ensignant
+		POST  --  http://127.0.0.1:8000/api/teacher/signup => registrer d un ensignant
+		POST  --   http://127.0.0.1:8000/api/teacher/logout => deconnecter le ensignant
+	// Etudiant : 
+		POST  --  http://127.0.0.1:8000/api/user/login => connecter le etudiant
+		POST  --  http://127.0.0.1:8000/api/user/signup => registrer d un etudiant
+		POST  --   http://127.0.0.1:8000/api/user/logout => deconnecter le etudiant
+
+// Gerer les Etudiants juste pour l'admin
+	
+	GET  --  http://127.0.0.1:8000/api/admin/etudiant/  => Obtenir tout les etudiants
+	POST --  http://127.0.0.1:8000/api/admin/etudiant   => Ajoute un etudiant
+	GET  --  http://127.0.0.1:8000/api/admin/etudiant/{id}/show  => Obtenir un etudiant ( remplacer {id} par l'id de l'etudiant(e))
+	PUT  --  http://127.0.0.1:8000/api/admin/etudiant/{id}  => modifier les infos d'un etudiant
+	DELETE --  http://127.0.0.1:8000/api/admin/etudiant/{id}  => supprimer un etudiant
+	PUT --  http://127.0.0.1:8000/api/admin/etudiant/{id}/active  => Activer le compte d'un etudiant 
+
+
+Note : pour tout autre functionalitees entrer dans laravel project / routes 
+vous obtenez les fichier api.php/admin.php/planer.php/teacher.php
+tout ces fichier contient tout les api
+Merci
+Lazaoui newfel
+
