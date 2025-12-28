@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\AdminAuthController;
+use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PlanerController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\UserController;
@@ -40,6 +41,14 @@ Route::prefix('admin')->group(function(){
             Route::put('/{planer}','update');
             Route::delete('/{planer}','destroy');
             Route::put('/{planer}/active','active');
+        });
+        // Mange Groups
+        Route::controller(GroupController::class)->prefix('group')->group(function(){
+            Route::get('/','index');
+            Route::post('/','store');
+            Route::get('/{group}/show','show');
+            Route::put('/{group}','update');
+            Route::delete('/{group}','destroy');
         });
     });
 });
