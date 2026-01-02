@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\EnrollementController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PlanerController;
 use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Admin\TeacherConstraintController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Http\Request;
@@ -69,6 +70,14 @@ Route::prefix('admin')->group(function(){
             Route::put('/{room}','update');
             Route::delete('/{room}','destroy');
         });
-        // Manage
+        // Manage Teacher Constraints
+        Route::controller(TeacherConstraintController::class)->prefix('constraint')->group(function(){
+            Route::get('/','index');
+            Route::get('/teacher/{teacher}','index_teacher');
+            Route::post('/','store');
+            Route::get('/{const}/show','show');
+            Route::put('/{const}','update');
+            Route::delete('/{const}','destroy');
+        });
     });
 });
