@@ -69,5 +69,6 @@ Route::prefix('admin')->group(function(){
             Route::put('/{room}','update');
             Route::delete('/{room}','destroy');
         });
+        // Manage
     });
 });
