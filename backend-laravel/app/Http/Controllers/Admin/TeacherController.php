@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
@@ -39,7 +41,16 @@ class TeacherController extends Controller
             'max_supervisions'  => $data['max_supervisions'],
             'is_active'     => true,
         ]);
-
+        // Log Audit
+        if(Auth::guard('admin')->check()){
+            AuditLog::create([
+                'entity'    => 'teacher',
+                'entity_id' => $teacher->id,
+                'action'    => 'create',
+                'Performed_by_admin'    => Auth::guard('admin')->id(),
+                'details'   => $teacher
+            ]);
+        }
         return response()->json([
             'success'   => true,
         ]);
@@ -81,6 +92,16 @@ class TeacherController extends Controller
                 'password'  => bcrypt($data['password']),
             ]);
         }
+        // Audit Log
+        if(Auth::guard('admin')->check()){
+            AuditLog::create([
+                'entity'    => 'teacher',
+                'entity_id' => $teacher->id,
+                'action'    => 'update',
+                'Performed_by_admin'    => Auth::guard('admin')->id(),
+                'details'   => $teacher
+            ]);
+        }
         return response()->json([
             'success'   => true,
         ]);
@@ -96,6 +117,17 @@ class TeacherController extends Controller
     }
 
     public function destroy(Teacher $teacher){
+        // Audit Log
+        if(Auth::guard('admin')->check()){
+            AuditLog::create([
+                'entity'    => 'teacher',
+                'entity_id' => $teacher->id,
+                'action'    => 'delete',
+                'Performed_by_admin'    => Auth::guard('admin')->id(),
+                'details'   => $teacher
+            ]);
+        }
+        // delete teacher
         $teacher->delete();
         return response()->json([
             'success'   => true,

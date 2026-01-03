@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\Planer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlanerController extends Controller
 {
@@ -28,7 +30,7 @@ class PlanerController extends Controller
             'max_supervisions'  => ['integer','required'],
         ]);
 
-        $teacher = Planer::create([
+        $planer = Planer::create([
             'email'     => $data['email'],
             'password'  => bcrypt($data['password']),
             'firstname' => $data['firstname'],
@@ -39,6 +41,17 @@ class PlanerController extends Controller
             'max_supervisions'  => $data['max_supervisions'],
             'is_active'     => true,
         ]);
+
+        // Audit Log
+        if(Auth::guard('admin')->check()){
+            AuditLog::create([
+                'entity'    => 'planer',
+                'entity_id' => $planer->id,
+                'action'    => 'create',
+                'Performed_by_admin'    => Auth::guard('admin')->id(),
+                'details'   => $planer
+            ]);
+        }
 
         return response()->json([
             'success'   => true,
@@ -75,6 +88,16 @@ class PlanerController extends Controller
             'max_supervisions'  => $data['max_supervisions'],
             'is_active'     => $data['is_active'],
         ]);
+        // Audit Log
+        if(Auth::guard('admin')->check()){
+            AuditLog::create([
+                'entity'    => 'planer',
+                'entity_id' => $planer->id,
+                'action'    => 'update',
+                'Performed_by_admin'    => Auth::guard('admin')->id(),
+                'details'   => $planer
+            ]);
+        }
         // change password
         if($data['password']){
             $planer->update([
@@ -96,6 +119,16 @@ class PlanerController extends Controller
     }
 
     public function destroy(Planer $planer){
+        // Audit Log
+        if(Auth::guard('admin')->check()){
+            AuditLog::create([
+                'entity'    => 'planer',
+                'entity_id' => $planer->id,
+                'action'    => 'delete',
+                'Performed_by_admin'    => Auth::guard('admin')->id(),
+                'details'   => $planer
+            ]);
+        }
         $planer->delete();
         return response()->json([
             'success'   => true,

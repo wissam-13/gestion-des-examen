@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\Enrollment;
 use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EnrollementController extends Controller
 {
@@ -38,6 +40,25 @@ class EnrollementController extends Controller
             'group_id'  => $data['group_id'],
             'date_joined'   => $data['date_joined']
         ]); 
+
+        // Audit Log
+        if(Auth::guard('admin')->check()){
+            AuditLog::create([
+                'entity'    => 'enrollment',
+                'entity_id' => $enrollement->user_id.'.'.$enrollement->group_id,
+                'action'    => 'create',
+                'Performed_by_admin'    => Auth::guard('admin')->id(),
+                'details'   => $enrollement
+            ]);
+        }else if(Auth::guard('planer')->check()){
+            AuditLog::create([
+                'entity'    => 'enrollment',
+                'entity_id' => $enrollement->user_id,
+                'action'    => 'create',
+                'Performed_by_planer'    => Auth::guard('planer')->id(),
+                'details'   => $enrollement
+            ]);
+        }
 
         return response()->json([
             'success'   => true,
@@ -74,6 +95,25 @@ class EnrollementController extends Controller
             'date_joined' => $data['date_joined'],
         ]);
 
+        // Audit Log
+        if(Auth::guard('admin')->check()){
+            AuditLog::create([
+                'entity'    => 'enrollment',
+                'entity_id' => $getEnrol->user_id,
+                'action'    => 'update',
+                'Performed_by_admin'    => Auth::guard('admin')->id(),
+                'details'   => $getEnrol
+            ]);
+        }else if(Auth::guard('planer')->check()){
+            AuditLog::create([
+                'entity'    => 'enrollment',
+                'entity_id' => $getEnrol->user_id,
+                'action'    => 'update',
+                'Performed_by_planer'    => Auth::guard('planer')->id(),
+                'details'   => $getEnrol
+            ]);
+        }
+
         if ($updated === 0) {
             return response()->json(['success' => false], 404);
         }
@@ -86,6 +126,24 @@ class EnrollementController extends Controller
         if(!$getEnrol){
             return response()->json([
                 'success'   => false
+            ]);
+        }
+        // Audit Log
+        if(Auth::guard('admin')->check()){
+            AuditLog::create([
+                'entity'    => 'enrollment',
+                'entity_id' => $getEnrol->user_id,
+                'action'    => 'delete',
+                'Performed_by_admin'    => Auth::guard('admin')->id(),
+                'details'   => $getEnrol
+            ]);
+        }else if(Auth::guard('planer')->check()){
+            AuditLog::create([
+                'entity'    => 'enrollment',
+                'entity_id' => $getEnrol->user_id,
+                'action'    => 'delete',
+                'Performed_by_planer'    => Auth::guard('planer')->id(),
+                'details'   => $getEnrol
             ]);
         }
          $updated = Enrollment::where('user_id', $student)

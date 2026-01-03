@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AuditLogController;
 use App\Http\Controllers\Admin\Auth\AdminAuthController;
 use App\Http\Controllers\Admin\EnrollementController;
 use App\Http\Controllers\Admin\GroupController;
@@ -78,6 +79,13 @@ Route::prefix('admin')->group(function(){
             Route::get('/{const}/show','show');
             Route::put('/{const}','update');
             Route::delete('/{const}','destroy');
+        });
+        // manage log audit
+        Route::controller(AuditLogController::class)->prefix('logaudit')->group(function(){
+            Route::get('/current','index_admin');
+            Route::get('/{auditlog}/show','show');
+            Route::delete('/{auditlog}','destroy');
+            Route::delete('/clearhistory/all','destroy_admin');
         });
     });
 });
