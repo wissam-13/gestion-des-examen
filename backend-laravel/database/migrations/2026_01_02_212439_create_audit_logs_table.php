@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreign('Performed_by_admin')->references('id')->on('admins')->onDelete('cascade');
             $table->foreign('Performed_by_planer')->references('id')->on('planers')->onDelete('cascade');
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

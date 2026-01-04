@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\EnrollementController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\TeacherConstraintController;
+use App\Http\Controllers\Planner\Auth\PlanerForgotPasswordController;
+use App\Http\Controllers\Planner\Auth\PlanerResetPasswordController;
 use App\Http\Controllers\Planner\Auth\PlannerAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('planer')->group(function(){
     Route::post('/login', [PlannerAuthController::class, 'login']);
     Route::post('/signup', [PlannerAuthController::class, 'signup']);
+
+    // Reset Password
+    Route::controller(PlanerForgotPasswordController::class)->group(function(){
+        Route::post('/forgot-password','sendVerificationCodeEmail');
+    });
+
+    Route::controller(PlanerResetPasswordController::class)->group(function(){
+        Route::post('/reset-password','send');
+        Route::get('/reset-password/{email}/{token}','index')->name('planer.password.reset');
+    });
 
     Route::middleware('auth:planer')->group(function () {
         Route::post('/logout', [PlannerAuthController::class, 'logout']);

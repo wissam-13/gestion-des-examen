@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('is_unavailable')->default(true);
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

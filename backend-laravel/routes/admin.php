@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AuditLogController;
 use App\Http\Controllers\Admin\Auth\AdminAuthController;
+use App\Http\Controllers\Admin\Auth\AdminForgotPasswordController;
+use App\Http\Controllers\Admin\Auth\AdminResetPasswordController;
 use App\Http\Controllers\Admin\EnrollementController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PlanerController;
@@ -15,6 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->group(function(){
     Route::post('/login', [AdminAuthController::class, 'login']);
     // Route::post('/signup', [AdminAuthController::class, 'signup']);
+
+    // Reset Password
+    Route::controller(AdminForgotPasswordController::class)->group(function(){
+        Route::post('/forgot-password','sendVerificationCodeEmail');
+    });
+
+    Route::controller(AdminResetPasswordController::class)->group(function(){
+        Route::post('/reset-password','send');
+        Route::get('/reset-password/{email}/{token}','index')->name('admin.password.reset');
+    });
 
     //  When the admin Auth
     Route::middleware('auth:admin')->group(function () {
